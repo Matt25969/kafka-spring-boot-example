@@ -39,8 +39,7 @@ public class HelloKafkaController {
 
     @GetMapping("/hello/{name}")
     public String hello(@PathVariable String name) throws Exception {
-    	String retVal = "";
-    	ArrayList<PracticalAdvice> list = new ArrayList<>(); 
+    	String retVal = ""; 
         latch = new CountDownLatch(messagesPerRequest);
         IntStream.range(0, messagesPerRequest)
                 .forEach(i -> this.template.send(topicName, String.valueOf(i),
