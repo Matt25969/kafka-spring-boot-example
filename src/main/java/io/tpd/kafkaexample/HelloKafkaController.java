@@ -38,15 +38,17 @@ public class HelloKafkaController {
     }
 
     @GetMapping("/hello/{name}")
-    public String hello(@PathVariable String name) throws Exception {
+    public ArrayList<PracticalList> hello(@PathVariable String name) throws Exception {
+    	ArrayList<PracticalAdvice> list = new ArrayList<>(); 
         latch = new CountDownLatch(messagesPerRequest);
         IntStream.range(0, messagesPerRequest)
                 .forEach(i -> this.template.send(topicName, String.valueOf(i),
-                        new PracticalAdvice("A Practical Advice "+name, i))
+                        PracticalAdvice pa = new PracticalAdvice("A Practical Advice "+name, i))
+                		list.add(pa);
                 );
         latch.await(60, TimeUnit.SECONDS);
         logger.info("All messages received");
-        return "Hello "+name;
+        return list;
     }
 
     @KafkaListener(topics = "advice-topic", clientIdPrefix = "json",
