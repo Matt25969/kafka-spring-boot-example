@@ -42,11 +42,11 @@ public class HelloKafkaController {
     	ArrayList<PracticalAdvice> list = new ArrayList<>(); 
         latch = new CountDownLatch(messagesPerRequest);
         IntStream.range(0, messagesPerRequest)
-                .forEach(i ->
+                .forEach(i -> {
                 PracticalAdvice pa = new PracticalAdvice("A Practical Advice "+name, i);
-                		this.template.send(topicName, String.valueOf(i),pa);
-                        
-                		list.add(pa);
+                this.template.send(topicName, String.valueOf(i),pa);    
+                list.add(pa);
+                }
                 );
         latch.await(60, TimeUnit.SECONDS);
         logger.info("All messages received");
