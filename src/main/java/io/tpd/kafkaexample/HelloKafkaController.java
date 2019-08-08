@@ -41,7 +41,7 @@ public class HelloKafkaController {
     public String hello(@PathVariable String name) throws Exception {
     	String retVal = ""; 
         latch = new CountDownLatch(messagesPerRequest);
-        IntStream.range(0, messagesPerRequest)
+        IntStream.range(0, messagesPerRequest).map(i -> retVal = retVal + String.valueOf(i))
         
                 .forEach(i -> this.template.send(topicName, String.valueOf(i),
                         new PracticalAdvice("A Practical Advice "+name, i)));
