@@ -42,7 +42,7 @@ public class HelloKafkaController {
     	String retVal = ""; 
         latch = new CountDownLatch(messagesPerRequest);
         IntStream.range(0, messagesPerRequest)
-        .forEach(i -> retVal+=String.valueOf(i))
+        
                 .forEach(i -> this.template.send(topicName, String.valueOf(i),
                         new PracticalAdvice("A Practical Advice "+name, i)));
                 
